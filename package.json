@@ -1,6 +1,6 @@
 {
   "name": "antifraud-hosting-components-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sector-neutral React screens for organization and host controller portals",
   "license": "Apache-2.0",
   "repository": { "type": "git", "url": "git+https://github.com/antifraudservices/antifraud-hosting-components-react.git" },
@@ -15,7 +15,7 @@
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && cp src/styles.css dist/styles.css",
+    "build": "rm -rf ./dist && tsc -p tsconfig.build.json && cp src/styles.css dist/styles.css",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "check": "npm run typecheck && npm test -- --maxWorkers=1 --no-file-parallelism && npm run build",
