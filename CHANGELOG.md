@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Add a controlled, sector-neutral Hosted organizations review workspace. The
+  consuming server retains authority, validation, signing and sector policy.
+
 ## 1.0.1 - 2026-10-21
 
 - Remove stale, non-exported entry and sign-in build artifacts from the package.

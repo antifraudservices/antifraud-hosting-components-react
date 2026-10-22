@@ -1,9 +1,10 @@
 // Flow contract: after common entry and sign-in, a controller manages host organizations, workforce and lifecycle through intention callbacks; no hosting component performs network, storage or authority work.
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import {
   HostOrganizationDirectory,
+  HostedOrganizationReviewWorkspace,
   OrganizationLifecycleAdministration,
   OrganizationWorkforceAdministration,
 } from '../src/index.js'
@@ -35,5 +36,42 @@ describe('sector-neutral hosting controller screens', () => {
     vi.spyOn(window, 'confirm').mockReturnValue(true)
     await userEvent.click(screen.getByRole('button', { name: 'Delete organization' }))
     expect(onAction).toHaveBeenCalledWith('purge-organization')
+  })
+
+  it('renders a controlled hosted-organization review workspace without deriving authority', async () => {
+    const onDownloadDraft = vi.fn()
+    const onAuthorize = vi.fn()
+    const onReject = vi.fn()
+    const onIssueVerification = vi.fn()
+    const fetchSpy = vi.spyOn(globalThis, 'fetch')
+    const complete = {
+      id: 'application-1', title: 'Synthetic clinic', organizationName: 'Clinic One', sector: 'animal-care',
+      accessLabel: 'Test Network', participationLabels: ['service provider'], representativeName: 'Alex Example',
+      representativeEmail: 'alex@example.test', controllerEmail: 'controller@example.test',
+      description: 'Synthetic application.', evidenceComplete: true, primaryAction: 'authorize' as const,
+    }
+    const incomplete = {
+      ...complete, id: 'application-2', title: 'Incomplete clinic', evidenceComplete: false,
+      primaryAction: 'issue-verification' as const,
+    }
+    render(<HostedOrganizationReviewWorkspace
+      copy={{ eyebrow: 'Host governance', title: 'Hosted organizations', description: 'Review applications.', empty: 'No applications.', downloadDraft: 'Download draft', authorize: 'Approve', reject: 'Reject', issueVerification: 'Issue verification', incompleteEvidence: 'Evidence incomplete', missingParticipationRoles: 'Participation roles missing', missingRepresentative: 'Representative missing' }}
+      busy={false}
+      applications={[complete, incomplete]}
+      onDownloadDraft={onDownloadDraft}
+      onAuthorize={onAuthorize}
+      onReject={onReject}
+      onIssueVerification={onIssueVerification}
+    />)
+    const completeCard = screen.getByRole('article', { name: 'Synthetic clinic' })
+    await userEvent.click(within(completeCard).getByRole('button', { name: 'Download draft' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Approve' }))
+    await userEvent.click(within(completeCard).getByRole('button', { name: 'Reject' }))
+    expect(screen.getByRole('button', { name: 'Issue verification' })).toBeDisabled()
+    expect(onDownloadDraft).toHaveBeenCalledWith(complete)
+    expect(onAuthorize).toHaveBeenCalledWith(complete)
+    expect(onReject).toHaveBeenCalledWith(complete)
+    expect(onIssueVerification).not.toHaveBeenCalled()
+    expect(fetchSpy).not.toHaveBeenCalled()
   })
 })
