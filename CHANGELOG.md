@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.2 - 2026-10-21
+
 - Add a controlled, sector-neutral Hosted organizations review workspace. The
   consuming server retains authority, validation, signing and sector policy.
 

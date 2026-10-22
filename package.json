@@ -1,6 +1,6 @@
 {
   "name": "antifraud-hosting-components-react",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Sector-neutral React screens for organization and host controller portals",
   "license": "Apache-2.0",
   "repository": { "type": "git", "url": "git+https://github.com/antifraudservices/antifraud-hosting-components-react.git" },
