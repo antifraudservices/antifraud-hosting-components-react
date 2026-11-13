@@ -1,13 +1,14 @@
 // Flow contract: after common entry and sign-in, a controller manages host organizations, workforce and lifecycle through intention callbacks; no hosting component performs network, storage or authority work.
-import { render, screen, within } from '@testing-library/react'
+import { cleanup, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   HostOrganizationDirectory,
   HostedOrganizationReviewWorkspace,
   OrganizationLifecycleAdministration,
   OrganizationWorkforceAdministration,
 } from '../src/index.js'
+afterEach(()=>{cleanup();vi.restoreAllMocks()})
 
 describe('sector-neutral hosting controller screens', () => {
   it('emits host administration intentions without hidden fetches', async () => {
@@ -23,9 +24,9 @@ describe('sector-neutral hosting controller screens', () => {
     expect(fetchSpy).not.toHaveBeenCalled()
   })
 
-  it('keeps workforce authority in the host callback', async () => {
+  it.each([true,false])('keeps workforce authority in the host callback (%s)', async unlockSecretRequired => {
     const onInvite = vi.fn()
-    render(<OrganizationWorkforceAdministration copy={{ title: 'Workforce', description: 'Manage employees.', totalLicenses: 'Total', usedLicenses: 'Used', freeLicenses: 'Free', employeesTitle: 'Employees', invitationsTitle: 'Invitations', inviteTitle: 'Invite employee', emailLabel: 'Email', roleLabel: 'Role', unlockSecretLabel: 'PIN', invite: 'Invite', inviting: 'Inviting', noFreeLicenses: 'No capacity', noEmployees: 'No employees', noInvitations: 'No invitations', licenseColumn: 'License', employeeColumn: 'Employee', roleColumn: 'Role', statusColumn: 'Status', devicesColumn: 'Devices', actionsColumn: 'Actions', active: 'Active', inactive: 'Inactive', pending: 'Pending', accepted: 'Accepted', cancelled: 'Cancelled', disable: 'Disable', reactivate: 'Reactivate', purge: 'Delete', confirmDisable: 'Disable?', confirmReactivate: 'Reactivate?', confirmPurge: 'Delete?', devicesLater: 'Later' }} summary={{ total: 2, used: 1, free: 1 }} employees={[]} invitations={[]} roles={[{ value: 'controller', label: 'Controller' }]} email="person@example.test" role="controller" unlockSecret="123456" onEmailChange={vi.fn()} onRoleChange={vi.fn()} onUnlockSecretChange={vi.fn()} onInvite={onInvite} onDisable={vi.fn()} onReactivate={vi.fn()} onPurge={vi.fn()}/>)
+    render(<OrganizationWorkforceAdministration unlockSecretRequired={unlockSecretRequired} copy={{ title: 'Workforce', description: 'Manage employees.', totalLicenses: 'Total', usedLicenses: 'Used', freeLicenses: 'Free', employeesTitle: 'Employees', invitationsTitle: 'Invitations', inviteTitle: 'Invite employee', emailLabel: 'Email', roleLabel: 'Role', unlockSecretLabel: 'PIN', invite: 'Invite', inviting: 'Inviting', noFreeLicenses: 'No capacity', noEmployees: 'No employees', noInvitations: 'No invitations', licenseColumn: 'License', employeeColumn: 'Employee', roleColumn: 'Role', statusColumn: 'Status', devicesColumn: 'Devices', actionsColumn: 'Actions', active: 'Active', inactive: 'Inactive', pending: 'Pending', accepted: 'Accepted', cancelled: 'Cancelled', disable: 'Disable', reactivate: 'Reactivate', purge: 'Delete', confirmDisable: 'Disable?', confirmReactivate: 'Reactivate?', confirmPurge: 'Delete?', devicesLater: 'Later' }} summary={{ total: 2, used: 1, free: 1 }} employees={[]} invitations={[]} roles={[{ value: 'controller', label: 'Controller' }]} email="person@example.test" role="controller" unlockSecret={unlockSecretRequired ? '123456' : ''} onEmailChange={vi.fn()} onRoleChange={vi.fn()} onUnlockSecretChange={vi.fn()} onInvite={onInvite} onDisable={vi.fn()} onReactivate={vi.fn()} onPurge={vi.fn()}/>)
     await userEvent.click(screen.getByRole('button', { name: 'Invite' }))
     expect(onInvite).toHaveBeenCalledOnce()
   })
