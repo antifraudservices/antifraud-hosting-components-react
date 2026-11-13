@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Allow a host with an already unlocked controller session to omit the workforce form's repeated unlock secret. Legacy callers still require it by default; authorization and persistence remain host-owned.
+
 ## 1.0.2 - 2026-10-21
 
 - Add a controlled, sector-neutral Hosted organizations review workspace. The
