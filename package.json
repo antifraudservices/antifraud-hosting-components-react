@@ -1,17 +1,30 @@
 {
   "name": "antifraud-hosting-components-react",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Sector-neutral React screens for organization and host controller portals",
   "license": "Apache-2.0",
-  "repository": { "type": "git", "url": "git+https://github.com/antifraudservices/antifraud-hosting-components-react.git" },
-  "bugs": { "url": "https://github.com/antifraudservices/antifraud-hosting-components-react/issues" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antifraudservices/antifraud-hosting-components-react.git"
+  },
+  "bugs": {
+    "url": "https://github.com/antifraudservices/antifraud-hosting-components-react/issues"
+  },
   "homepage": "https://github.com/antifraudservices/antifraud-hosting-components-react#readme",
   "type": "module",
-  "files": ["dist", "README.md", "CHANGELOG.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
@@ -21,8 +34,13 @@
     "check": "npm run typecheck && npm test -- --maxWorkers=1 --no-file-parallelism && npm run build",
     "prepack": "npm run check"
   },
-  "engines": { "node": ">=24.0.0" },
-  "peerDependencies": { "react": ">=18.3.0", "react-dom": ">=18.3.0" },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.3.0",
+    "react-dom": ">=18.3.0"
+  },
   "devDependencies": {
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
