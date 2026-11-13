@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Keep the workforce grid and invitation form within the host width when existing employee identifiers require a wide table. The table retains its own horizontal scroller; controller authority remains host-owned. The crossed desktop/mobile invitation journey reproduced the overflow before this fix.
+
 - Allow a host with an already unlocked controller session to omit the workforce form's repeated unlock secret. Legacy callers still require it by default; authorization and persistence remain host-owned.
 
 ## 1.0.2 - 2026-10-21
