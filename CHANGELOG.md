@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Group member creation and the member directory inside a keyboard-operable Members disclosure; keep Invitations in a separate disclosure.
+- Keep each invitation's host-supplied status, code and recovery actions inside that invitation through `renderInvitationDetails`. Hosts can label the member-creation action with `createMemberLabel`.
+- Verify scoped invitation actions and member-form focus with seven component tests, strict type checking and an isolated desktop/mobile browser preview. Portal journey acceptance remains separate.
+
 ## 1.0.3 - 2026-11-13
 
 - Keep workforce test selectors compatible with Testing Library's typed role queries; a string name retains exact matching.
