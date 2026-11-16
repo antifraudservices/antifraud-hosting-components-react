@@ -9,6 +9,8 @@ calls, persistence and signing.
 under Members. Invitations has its own disclosure, with a disclosure for each
 invitation. `createMemberLabel` labels the action that opens and focuses the
 creation form.
+Use `onBeginMemberCreation` to clear the previous role or prepare the host's
+controlled form before it receives focus.
 
 Use `renderInvitationDetails(invitation)` to place an authorized activation
 code, delivery result or recovery action inside the matching invitation. The

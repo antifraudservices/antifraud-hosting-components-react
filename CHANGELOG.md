@@ -2,8 +2,11 @@
 
 ## Unreleased
 
+## 1.0.4 - 2026-11-16
+
 - Group member creation and the member directory inside a keyboard-operable Members disclosure; keep Invitations in a separate disclosure.
 - Keep each invitation's host-supplied status, code and recovery actions inside that invitation through `renderInvitationDetails`. Hosts can label the member-creation action with `createMemberLabel`.
+- Emit `onBeginMemberCreation` before focusing the form so hosts can clear the previous role when starting another member invitation.
 - Verify scoped invitation actions and member-form focus with seven component tests, strict type checking and an isolated desktop/mobile browser preview. Portal journey acceptance remains separate.
 
 ## 1.0.3 - 2026-11-13

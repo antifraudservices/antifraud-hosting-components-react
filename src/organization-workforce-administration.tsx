@@ -9,6 +9,8 @@ export type OrganizationWorkforceAdministrationProps = Readonly<{
   copy: OrganizationWorkforceCopy; summary: WorkforceLicenseSummary; employees: readonly WorkforceEmployee[]; invitations: readonly WorkforceInvitation[];
   roles: readonly WorkforceRoleOption[]; email: string; role: string; unlockSecret: string; unlockSecretRequired?: boolean; busyAction?: string; error?: string;
   createMemberLabel?: string;
+  /** Presentation intent for clearing or preparing the host's controlled creation form. */
+  onBeginMemberCreation?: () => void;
   /** The host supplies authorized details for this exact invitation, including protected codes or recovery actions. */
   renderInvitationDetails?: (invitation: WorkforceInvitation) => ReactNode;
   onEmailChange(value: string): void; onRoleChange(value: string): void; onUnlockSecretChange(value: string): void;
@@ -25,7 +27,7 @@ export function OrganizationWorkforceAdministration(props: OrganizationWorkforce
   const canInvite = !noCapacity && !inviting && Boolean(email.trim() && role && (props.unlockSecretRequired === false || unlockSecret))
   function submit(event: FormEvent<HTMLFormElement>) { event.preventDefault(); if (canInvite) void props.onInvite() }
   function confirm(message: string, action: () => void | Promise<void>) { if (window.confirm(message)) void action() }
-  function openCreation() { if (creation.current) creation.current.open = true; emailInput.current?.focus() }
+  function openCreation() { props.onBeginMemberCreation?.(); if (creation.current) creation.current.open = true; emailInput.current?.focus() }
   return <section className="afpc-workforce" aria-labelledby="afpc-workforce-title">
     <header><div><h1 id="afpc-workforce-title">{copy.title}</h1><p>{copy.description}</p></div><dl className="afpc-license-summary"><div><dt>{copy.totalLicenses}</dt><dd>{summary.total}</dd></div><div><dt>{copy.usedLicenses}</dt><dd>{summary.used}</dd></div><div><dt>{copy.freeLicenses}</dt><dd>{summary.free}</dd></div></dl></header>
     <details className="afpc-workforce-panel" open>

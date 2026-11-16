@@ -19,11 +19,12 @@ function props() {
   return {copy, summary:{total:4, used:0, free:4}, employees:[], invitations:[] as WorkforceInvitation[],
     roles:[{value:'member', label:'Member'}], email:'member@example.test', role:'member', unlockSecret:'', unlockSecretRequired:false,
     onEmailChange:vi.fn(), onRoleChange:vi.fn(), onUnlockSecretChange:vi.fn(), onInvite:vi.fn(),
-    onDisable:vi.fn(), onReactivate:vi.fn(), onPurge:vi.fn(), createMemberLabel:'Create a new employee'}
+    onDisable:vi.fn(), onReactivate:vi.fn(), onPurge:vi.fn(), createMemberLabel:'Create a new employee', onBeginMemberCreation:vi.fn()}
 }
 
 it('keeps member creation inside keyboard-focusable Members disclosure', async () => {
-  render(<OrganizationWorkforceAdministration {...props()}/>)
+  const controlled=props()
+  render(<OrganizationWorkforceAdministration {...controlled}/>)
   const members=screen.getByRole('heading',{name:'Members'}).closest('details')
   expect(members).not.toBeNull()
   expect(members).toContainElement(screen.getByRole('combobox',{name:'Role'}))
@@ -36,6 +37,7 @@ it('keeps member creation inside keyboard-focusable Members disclosure', async (
   await userEvent.click(summary)
   expect(members).toHaveAttribute('open')
   await userEvent.click(screen.getByRole('button',{name:'Create a new employee'}))
+  expect(controlled.onBeginMemberCreation).toHaveBeenCalledExactlyOnceWith()
   expect(screen.getByRole('textbox',{name:'Email'})).toHaveFocus()
 })
 
