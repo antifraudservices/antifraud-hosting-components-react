@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.5 - 2026-11-18
+
 - Add controlled email/telephone contact entry and canonical contact invitation/member rows while preserving the existing email API.
 - Keep phone invitation activation actions inside their own invitation and member licence/device details inside Members. Telephone input uses E.164 format.
 - Verify the new phone controls and unchanged email/disclosure behavior with ten component cases, strict type checking and the package build.
